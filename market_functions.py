@@ -1,10 +1,5 @@
 import json
 import urllib.request
-import time
-import datetime
-import sys
-import os
-from pprint import pprint 
 
 class color:
 	#POSITIVE = '\033[42m'
