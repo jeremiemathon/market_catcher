@@ -1,0 +1,15 @@
+{
+"values":[
+	{"name":"EPA:ALCLS","nb":310,"pru":19.46,"currency":"euro"},
+	{"name":"EPA:ALVIV","nb":22,"pru":14.07,"currency":"euro"},
+	{"name":"EPA:AVQ","nb":1000,"pru":0.11,"currency":"euro"},
+	{"name":"EPA:ALREA","nb":34,"pru":8.66,"currency":"euro"}
+	],
+"globals":[
+	{"name":"NBI","currency":"none"},
+	{"name":"INDEXEURO:PX1","currency":"none"},
+	{"name":"NASDAQ:CLLS","currency":"dollar"}
+	],
+"wallet_cash":99.37,
+"wallet_total_transfers":7165
+}
