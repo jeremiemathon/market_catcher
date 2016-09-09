@@ -8,7 +8,8 @@
 "globals":[
 	{"name":"NBI","currency":"none"},
 	{"name":"INDEXEURO:PX1","currency":"none"},
-	{"name":"NASDAQ:CLLS","currency":"dollar"}
+	{"name":"NASDAQ:CLLS","currency":"dollar"},
+	{"name":"NASDAQ:AAPL","currency":"dollar"}
 	],
 "wallet_cash":99.37,
 "wallet_total_transfers":7165
