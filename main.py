@@ -44,7 +44,9 @@ if __name__ == '__main__':
 	
 	print("Content-type: text/html; charset=utf-8\n\n")
 	print("<meta http-equiv=\"refresh\" content=\"10\" />")
-	print("<html><head><title>STOCKS</title></head><body bgcolor=\"#000000\">")
+	font = "<STYLE TYPE=\"text/css\">body{color: white;}</STYLE>"
+	print("<html><head>" + font + "<title>STOCKS</title></head><body bgcolor=\"#000000\">")
 	print_html_totals(d)
 	print_html_globals(d)
+	print_html_values(d)
 	print("</body></html>")
