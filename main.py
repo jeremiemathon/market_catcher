@@ -39,9 +39,11 @@ if __name__ == '__main__':
 			print_table_globals(d)
 			time.sleep(10)
 			os.system('clear')
-	print "Content-type: text/html; charset=utf-8\n\n"
-	print "<html><head><title>Répertoire local</title></head><body>"
+	
+	print("Content-type: text/html; charset=utf-8\n\n")
+	print("<html><head><title>Répertoire local</title></head><body>")
 	import cgitb
 	cgitb.enable()
-	print_totals(d)
+	print_html_totals(d)
+	print("</body></html>")
 	sys.exit(0)

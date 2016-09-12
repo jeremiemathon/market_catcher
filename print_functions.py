@@ -48,3 +48,15 @@ def print_totals(data):
 	print('%-15s' % ('DAY'), '%-8s' % (day))
 	print('%-15s' % ('PERF'), '%-8s' % (total_variation))
 	print('%-15s' % ('%PERF'), '%-8s' % (total_performance))
+
+
+def print_html_totals(data):
+	total = str(data["total"])
+	day = str(data["total"] - data["total_fix"])
+	total_variation  = str(data["total"] - data["total_pru"])
+	total_performance = str(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"])
+	
+	print("<table><tr><td>TOTAL</td><td>" + total + "</td></tr>")
+	print("<tr><td>DAY</td><td>" + day + "</td></tr>")
+	print("<tr><td>PERF</td><td>" + total_variation + "</td></tr>")
+	print("<tr><td>%PERF</td><td>" + total_performance + "</td></tr>")
