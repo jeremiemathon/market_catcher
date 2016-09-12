@@ -9,6 +9,7 @@ from print_functions import *
 from market_webserver import server
 import argparse
 import io
+import cgitb
 
 
 def parsing():
@@ -19,17 +20,18 @@ def parsing():
 		return True
 	return False
 
-def store_json_file(d):
-	with open(".market_catcher.json", "w") as file:
-		file.write(str(d))
+#def store_json_file(d):
+#	with open(".market_catcher.json", "w") as file:
+#		file.write(str(d))
 	
 
 if __name__ == '__main__':
-	os.environ['TERM'] = 'xterm'
+	cgitb.enable()
 	d = fulfill_data_file()
 	#server.create_server_instance('0.0.0.0',8888,d)
 	if parsing():
 		while 1:
+			os.environ['TERM'] = 'xterm'
 			os.system('clear')
 			print_totals(d)
 			print('\n')
@@ -41,9 +43,8 @@ if __name__ == '__main__':
 			os.system('clear')
 	
 	print("Content-type: text/html; charset=utf-8\n\n")
-	print("<html><head><title>Répertoire local</title></head><body>")
-	import cgitb
-	cgitb.enable()
+	print("<meta http-equiv=\"refresh\" content=\"10\" />")
+	print("<html><head><title>STOCKS</title></head><body bgcolor=\"#000000\">")
 	print_html_totals(d)
+	print_html_globals(d)
 	print("</body></html>")
-	sys.exit(0)

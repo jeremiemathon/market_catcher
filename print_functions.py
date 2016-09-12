@@ -49,14 +49,26 @@ def print_totals(data):
 	print('%-15s' % ('PERF'), '%-8s' % (total_variation))
 	print('%-15s' % ('%PERF'), '%-8s' % (total_performance))
 
+def colorize_html_value(value):
+	if value < 0:
+		return "<td bgcolor=\"#FF0000\" /td>" + str('%-8.2f' % (value)) + "<td>"
+	return "<td bgcolor=\"#00FF00\" /td>" + str('%-8.2f' % (value)) + "<td>" 
+
+
 
 def print_html_totals(data):
-	total = str(data["total"])
-	day = str(data["total"] - data["total_fix"])
-	total_variation  = str(data["total"] - data["total_pru"])
-	total_performance = str(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"])
+	total = colorize_html_value(data["total"])
+	day = colorize_html_value(data["total"] - data["total_fix"])
+	total_variation  = colorize_html_value(data["total"] - data["total_pru"])
+	total_performance = colorize_html_value(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"])
 	
-	print("<table><tr><td>TOTAL</td><td>" + total + "</td></tr>")
-	print("<tr><td>DAY</td><td>" + day + "</td></tr>")
-	print("<tr><td>PERF</td><td>" + total_variation + "</td></tr>")
-	print("<tr><td>%PERF</td><td>" + total_performance + "</td></tr>")
+	print("<table><tr><td fgcolor><font color=\"white\">TOTAL</font></td>" + total + "</tr>")
+	print("<tr><td><font color=\"white\">DAY</font></td>" + day + "</tr>")
+	print("<tr><td><font color=\"white\">PERF</font></td>" + total_variation + "</tr>")
+	print("<tr><td><font color=\"white\">%PERF</font></td>" + total_performance + "</tr>")
+
+def print_html_globals(d):
+	for v in d["globals"]:
+		price = colorize_html_value(v["c"])
+		pc_day = colorize_html_value(v["cp_fix"])
+		print("<tr><td><font color=\"white\">" + v["name"] + "</font></td>" + price + pc_day)
