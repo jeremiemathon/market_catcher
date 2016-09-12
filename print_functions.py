@@ -3,9 +3,12 @@
 class color:
         #POSITIVE = '\033[42m'
         #NEGATIVE = '\033[41m'
-        POSITIVE = '\033[30;42m'
-        NEGATIVE = '\033[1;30;41m'
-        MIDDLE = '\033[1;30;43m'
+        #POSITIVE = '\033[30;42m'
+        #NEGATIVE = '\033[1;30;41m'
+        #MIDDLE = '\033[1;30;43m'
+        POSITIVE = '\033[1;32m'
+        NEGATIVE = '\033[1;31m'
+        MIDDLE = '\033[1;33m'
         BOLD = '\033[1m'
         END = '\033[0m'
 
