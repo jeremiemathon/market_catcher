@@ -51,8 +51,8 @@ def print_totals(data):
 
 def colorize_html_value(value):
 	if value < 0:
-		return "<td bgcolor=\"#FF0000\"><font color=\"black\">" + str('%-8.2f' % (value)) + "</font><td>"
-	return "<td bgcolor=\"#00FF00\"><font color=\"black\">" + str('%-8.2f' % (value)) + "</font><td>" 
+		return "<td bgcolor=\"#FF0000\" width=\"100\"><font color=\"black\">" + str('%-8.2f' % (value)) + "</font></td>"
+	return "<td bgcolor=\"#00FF00\" width=\"100\"><font color=\"black\">" + str('%-8.2f' % (value)) + "</font></td>" 
 
 
 
@@ -62,13 +62,13 @@ def print_html_totals(data):
 	total_variation  = colorize_html_value(data["total"] - data["total_pru"])
 	total_performance = colorize_html_value(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"])
 	
-	print("<table><tr><td width=210><font color=\"white\">TOTAL</font></td>" + total + "</tr>")
+	print("<table cellspacing=\"3\"><tr><td width=210><font color=\"white\">TOTAL</font></td>" + total + "</tr>")
 	print("<tr><td width=210><font color=\"white\">DAY</font></td>" + day + "</tr>")
 	print("<tr><td width=210><font color=\"white\">PERF</font></td>" + total_variation + "</tr>")
 	print("<tr><td width=210><font color=\"white\">%PERF</font></td>" + total_performance + "</tr></table>")
 
 def print_html_globals(d):
-	print("<table>")
+	print("<p>&nbsp;</p><table cellspacing=\"3\"><tr><td width=\"100\">NAME</td><td width=\"100\">PRICE</td><td width=\"100\">%DAY</td></tr>")
 	for v in d["globals"]:
 		price = colorize_html_value(v["c"])
 		pc_day = colorize_html_value(v["cp_fix"])
@@ -77,12 +77,13 @@ def print_html_globals(d):
 
 
 def print_html_values(d):
-	print("<p>&nbsp;</p><table><tr><td width=100>NAME<td><td width=100>PRU</td><td width=100>PRICE</td><td width=100>%DAY</td><td width=100>DAY</td><td width=100>TOTAL</td></tr>")
+	print("<p>&nbsp;</p>\n<table cellspacing=\"3\">\n<tr>\n\t<td width=210>NAME    </td><td width=100>PRU</td><td width=100>PRICE</td><td width=100>%DAY</td><td width=100>DAY</td><td width=100>TOTAL</td>\n</tr>")
 	for v in d["values"]:
 		pru = colorize_html_value(v["pru"])
 		price = colorize_html_value(v["c"])
 		pc_day = colorize_html_value(v["cp_fix"])
 		day = colorize_html_value(v["c_fix"]*v["nb"])
 		total = colorize_html_value(v["nb"]*(v["c"]-v["pru"]))
-		print("<tr><td>" + v["name"] + "</td>" + pru + price + pc_day + day + total + "</tr>")
+		name = "<tr>\n\t<td width=100><font color=\"white\">" + str('%-8s' % (v["name"])) + "</font></td>"
+		print(name + pru + price + pc_day + day + total + "\n</tr>")
 	print("</table>")
