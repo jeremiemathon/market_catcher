@@ -4,13 +4,14 @@ import time
 import datetime
 import sys
 import os
+import bs4
 from market_functions import *
 from print_functions import *
 from market_webserver import server
+from twitter import *
 import argparse
 import io
 import cgitb
-
 
 def parsing():
 	parser = argparse.ArgumentParser()
@@ -42,11 +43,13 @@ if __name__ == '__main__':
 			time.sleep(10)
 			os.system('clear')
 	
-	print("Content-type: text/html; charset=utf-8\n\n")
-	print("<meta http-equiv=\"refresh\" content=\"10\" />")
+	print("Content-Type: text/html;charset=\"utf-8\"\n\n")
+	print("<meta http-equiv=\"refresh\" content=\"3\" />")
 	font = "<STYLE TYPE=\"text/css\">body{color: white;}</STYLE>"
-	print("<html><head>" + font + "<title>STOCKS</title></head><body bgcolor=\"#000000\">")
+	font = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">" 
+	print("<html><head>" + font + "<title>STOCKS</title></head><body bgcolor=\"#000000\">Stock Market analyzer")
 	print_html_totals(d)
 	print_html_globals(d)
 	print_html_values(d)
+	twitter()
 	print("</body></html>")
