@@ -40,6 +40,7 @@ if __name__ == '__main__':
 			
 			print('\n')
 			print_table_globals(d)
+			twitter()
 			time.sleep(10)
 			os.system('clear')
 	
