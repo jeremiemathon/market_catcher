@@ -12,6 +12,8 @@ from twitter import *
 import argparse
 import io
 import cgitb
+import cgi
+import re
 
 def parsing():
 	parser = argparse.ArgumentParser()
@@ -45,12 +47,19 @@ if __name__ == '__main__':
 			os.system('clear')
 	
 	print("Content-Type: text/html;charset=\"utf-8\"\n\n")
-	print("<meta http-equiv=\"refresh\" content=\"3\" />")
+	print("<meta http-equiv=\"refresh\" content=\"10\" />")
 	font = "<STYLE TYPE=\"text/css\">body{color: white;}</STYLE>"
 	font = "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">" 
-	print("<html><head>" + font + "<title>STOCKS</title></head><body bgcolor=\"#000000\">Stock Market analyzer")
+	print("<html><head>" + font + "<title>STOCKS</title></head><body bgcolor=\"#000000\" font-size=\"50%\">")
+	arguments = cgi.FieldStorage()
+	for i in arguments.keys():
+		 print(arguments[i].value)
+	print("<table><tr valign=\"top\"><td>")
 	print_html_totals(d)
+	print("</td><td>")
 	print_html_globals(d)
+	print("</td><td>")
 	print_html_values(d)
+	print("</td></tr></table>")
 	twitter()
 	print("</body></html>")
