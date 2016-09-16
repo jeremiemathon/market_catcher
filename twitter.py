@@ -26,9 +26,11 @@ def twitter():
 	api = tweepy.API(auth)
 
 	search = api.search("Cellectis", count=20)
-	print("<br><br>")
+	print("<br><br><table>")
 	for i in search:
-		text = i.text.replace(u"\u2026", "...").replace(u"\u2019", "'").replace(u"\xe9", "e").replace(u"\u201c","\"").replace(u"\u201d","\"")
+		text = i.text.replace(u"\u2026", "...").replace(u"\u2019", "'").replace(u"\xe9", "e").replace(u"\u201c","\"").replace(u"\u201d","\"").replace(u"\xe7", "c")
 		if i.created_at.day == datetime.datetime.now().day:
-			print("<font color=\"green\">" + str(i.created_at)[:-9] +"</font>\t" + convertLinks(text) + "<br>")
-		else: print(str(i.created_at)[:-9] + "\t" + text + "<br>")
+			# print(dir(i))
+			print("<tr><td><font color=\"green\">" + str(i.created_at)[:-9] + " @"  + str(i.user.screen_name) + "</font></td><td>" + convertLinks(text) + "</td></tr>")
+		else: print("<tr><td>" + str(i.created_at)[:-9] + " @" + str(i.user.screen_name) + "</td><td>" + text + "</td></tr>")
+	print("</table>")
