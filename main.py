@@ -42,7 +42,6 @@ if __name__ == '__main__':
 			
 			print('\n')
 			print_table_globals(d)
-			twitter()
 			time.sleep(10)
 			os.system('clear')
 	
@@ -54,7 +53,7 @@ if __name__ == '__main__':
 	arguments = cgi.FieldStorage()
 	for i in arguments.keys():
 		 print(arguments[i].value)
-	print("<table><tr valign=\"top\"><td>")
+	print("<table class=\"stock_table\"><tr><th>TOTALS</th><th>INDICES</th><th>PORTFOLIO</th></tr><tr valign=\"top\"><td>")
 	print_html_totals(d)
 	print("</td><td>")
 	print_html_globals(d)

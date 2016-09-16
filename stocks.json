@@ -9,7 +9,9 @@
 	{"name":"NBI","currency":"none"},
 	{"name":"INDEXEURO:PX1","currency":"none"},
 	{"name":"NASDAQ:CLLS","currency":"dollar"},
-	{"name":"NASDAQ:AAPL","currency":"dollar"}
+	{"name":"NASDAQ:AAPL","currency":"dollar"},
+	{"name":"SHA:000001","currency":"none"},
+	{"name":"INDEXNIKKEI:NI225","currency":"none"}
 	],
 "wallet_cash":99.37,
 "wallet_total_transfers":7165
