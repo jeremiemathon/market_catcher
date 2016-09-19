@@ -7,7 +7,6 @@ import os
 import bs4
 from market_functions import *
 from print_functions import *
-from market_webserver import server
 from twitter import *
 from boursorama import *
 import argparse
