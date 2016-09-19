@@ -91,17 +91,17 @@ def print_html_totals(data):
 	total_variation  = colorize_html_value(data["total"] - data["total_pru"],"euro",True)
 	total_performance = colorize_html_value(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"],"percent",True)
 	
-	print("<table cellspacing=\"3\"><tr><td width=70>TOTAL</font></td>" + total + "</tr>")
-	print("<tr><td width=\"70\">DAY</font></td>" + day + "</tr>")
-	print("<tr><td width=\"70\">PERF</font></td>" + total_variation + "</tr>")
-	print("<tr><td width=\"70\">%PERF</font></td>" + total_performance + "</tr></table>")
+	print("<table cellspacing=\"3\"><tr><td width=\"70\" class=\"totals_td\">TOTAL</td>" + total + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">DAY</td>" + day + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">PERF</td>" + total_variation + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">%PERF</td>" + total_performance + "</tr></table>")
 
 def print_html_globals(d):
 	print("<table cellspacing=\"3\"><tr><th width=\"150\">NAME</th><th width=\"70\">PRICE</th><th width=\"70\">%DAY</th></tr>")
 	for v in d["globals"]:
 		price = colorize_html_value(v["c"],"none",False)
 		pc_day = colorize_html_value(v["cp_fix"],"percent",True)
-		print("<tr><td width=70><font color=\"white\">" + v["name"] + "</font>" + price + pc_day )
+		print("<tr><td width=70><font color=\"white\">" + v["real_name"] + "</font>" + price + pc_day )
 	print("</table>")
 
 
@@ -115,6 +115,6 @@ def print_html_values(d):
 		total = colorize_html_value(v["nb"]*(v["c"]-v["pru"]),"euro",True)
 		invest = colorize_html_value(v["nb"]*v["pru"],"euro",False)
 		pc_total = colorize_html_value(100 * (v["nb"]*(v["c"]-v["pru"])) / (v["nb"]*v["pru"]),"percent",True)
-		name = "<tr>\n\t<td width=\"70\"><font color=\"white\">" + str('%-8s' % (v["name"])) + "</font></td>"
+		name = "<tr>\n\t<td width=\"70\"><font color=\"white\">" + str('%-8s' % (v["real_name"])) + "</font></td>"
 		print(name + invest + pru + price + pc_day + day + total + pc_total +"\n</tr>")
 	print("</table>")

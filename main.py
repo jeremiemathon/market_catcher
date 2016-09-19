@@ -9,6 +9,7 @@ from market_functions import *
 from print_functions import *
 from market_webserver import server
 from twitter import *
+from boursorama import *
 import argparse
 import io
 import cgitb
@@ -53,7 +54,7 @@ if __name__ == '__main__':
 	arguments = cgi.FieldStorage()
 	for i in arguments.keys():
 		 print(arguments[i].value)
-	print("<table class=\"stock_table\"><tr><th>TOTALS</th><th>INDICES</th><th>PORTFOLIO</th></tr><tr valign=\"top\"><td>")
+	print("<table class=\"stock_table\"><tr><th width=\"25%\">TOTALS</th><th width=\"25%\">INDICES</th><th width=\"50%\">PORTFOLIO</th></tr><tr valign=\"top\"><td>")
 	print_html_totals(d)
 	print("</td><td>")
 	print_html_globals(d)
@@ -61,4 +62,5 @@ if __name__ == '__main__':
 	print_html_values(d)
 	print("</td></tr></table>")
 	twitter()
+	#parse_boursorama_forum("ALCLS")
 	print("</body></html>")

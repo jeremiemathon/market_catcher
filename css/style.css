@@ -16,11 +16,9 @@ th {
 background-color: #00FF00;
 color: #000000;
 }
-.atd {
-font-family: sans-serif;
-border: thin solid #6495ed;
-padding: 5px;
-text-align: center;
+.totals_td {
+background-color: #00FF00;
+color: #000000;
 }
 .stock_td {
 font-family: sans-serif;
