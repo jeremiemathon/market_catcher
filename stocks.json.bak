@@ -1,0 +1,17 @@
+{
+"values":[
+	{"name":"1rEPALCLS","real_name":"Cellectis","nb":19,"pru":25,"currency":"euro","countable":"yes"}
+	],
+"globals":[
+	],
+"globals2":[
+	{"name":"CLXT","real_name":"Calyxt","currency":"dollar"}
+	],
+"cryptos":[
+	{"name":"XBTEUR","return_name":"XXBTZEUR","real_name":"Bitcoin"},
+	{"name":"XRPEUR","return_name":"XXRPZEUR","real_name":"Ripple"}
+	],
+"wallet_cash":207.34,
+"wallet_total_transfers":665,
+"anonymous":"off"
+}
