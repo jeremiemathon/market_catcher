@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+from currency_converter import CurrencyConverter
+
 
 class color:
         #POSITIVE = '\033[42m'
@@ -11,6 +13,8 @@ class color:
         MIDDLE = '\033[1;33m'
         BOLD = '\033[1m'
         END = '\033[0m'
+
+anonymous = "off"
 
 def colorize_print_value(value):
 	if value < 0:
@@ -49,72 +53,112 @@ def print_totals(data):
 	print('%-15s' % ('PERF'), '%-8s' % (total_variation))
 	print('%-15s' % ('%PERF'), '%-8s' % (total_performance))
 
-def colorize_html_value(value,currency,colorize):
+def colorize_html_value(value,currency,colorize,anonymous):
+	if "crypto" in currency:
+		ret = "<td "
+		ret = ret + "width=\"70\">" + str('%-8.6f' % (value))
+		ret = ret + "</font></td>"
+		return ret
+
 	ret = "<td "
 	if value < 0 and colorize:
-		ret = ret + "bgcolor=\"#FF0000\" width=\"70\"><font color=\"black\">" + str('%-8.2f' % (value))
-	if value >= 0 and colorize:
-		ret = ret + "bgcolor=\"#00FF00\" width=\"70\"><font color=\"black\">" + str('%-8.2f' % (value))
+		if anonymous:
+			temp = "width=\"70\"><font color=\"#FF0000\">-### "
+		else: temp = "width=\"70\"><font color=\"#FF0000\">" + str('%-8.2f' % (value))
+		#ret = ret + "bgcolor=\"#FF0000\" width=\"70\"><font color=\"black\">" + str('%-8.2f' % (value))
+		ret = ret + temp
+	if value > 0 and colorize:
+		if anonymous:
+			temp = "width=\"70\"><font color=\"#00FF00\">### "
+		else: temp = "width=\"70\"><font color=\"#00FF00\">" + str('%-8.2f' % (value))
+		#ret = ret + "bgcolor=\"#00FF00\" width=\"70\"><font color=\"black\">" + str('%-8.2f' % (value))
+		ret = ret + temp
+	if value == 0 and colorize:
+		if anonymous:
+			temp = "width=\"70\"><font color=\"#6E6E6E\">### "
+		else: temp = "width=\"70\"><font color=\"#6E6E6E\">" + str('%-8.2f' % (value))
+		ret = ret + temp
 	if not colorize:
-		ret = ret + " width=\"70\"><font color=\"white\">" + str('%-8.2f' % (value))
+		if anonymous:
+			temp = "width=\"70\">### "
+		else: temp = "width=\"70\">" + str('%-8.2f' % (value))
+		ret = ret + temp
 
 	
 	if "euro" in currency:
 		ret = ret + "&#8364;</font></td>"
+	if "dollar" in currency:
+		c = CurrencyConverter()
+		eur = c.convert(value,'USD','EUR')
+		ret = ret + "&#36;/" + str('%-8.2f' % (eur)) + "&#8364;</font></td>"
 	if "percent" in currency:
 		ret = ret + "%</font></td>"
 	if "none" in currency:
 		ret = ret + "</font></td>"
 	return ret
 
-def colorize_html2_value(value,currency,colorize):
-	ret = ""
-	if value < 0 and colorize:
-		ret = ret + "<font color=\"black\">" + str('%-8.2f' % (value))
-	if value >= 0 and colorize:
-		ret = ret + "<font color=\"black\">" + str('%-8.2f' % (value))
-	if not colorize:
-		ret = ret + + str('%-8.2f' % (value))
-
-	
-	if "euro" in currency:
-		ret = ret + "&#8364;</font>"
-	if "percent" in currency:
-		ret = ret + "%</font>"
-	if "none" in currency:
-		ret = ret + "</font>"
-	return ret
 
 def print_html_totals(data):
-	total = colorize_html_value(data["total"],"euro",True)
-	day = colorize_html_value(data["total"] - data["total_fix"],"euro",True)
-	total_variation  = colorize_html_value(data["total"] - data["total_pru"],"euro",True)
-	total_performance = colorize_html_value(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"],"percent",True)
+	global anonymous
+	if data["anonymous"] == "on":
+		anonymous = True
+	else: anonymous = False
+	total = colorize_html_value(data["total"] + data["wallet_cash"],"euro",True,anonymous)
+	day = colorize_html_value(data["total_fix"],"euro",True,anonymous)
+	total_variation  = colorize_html_value(data["total"] - data["total_pru"],"euro",True,anonymous)
+	total_performance = colorize_html_value(100 * (data["total"] - data["total_pru"] + data["wallet_cash"]) / data["wallet_total_transfers"],"percent",True,False)
+	wallet_variation = colorize_html_value(data["total"] + data["wallet_cash"] - data["wallet_total_transfers"],"euro",True,anonymous)
+	wallet_performance = colorize_html_value(100 * (data["total"] + data["wallet_cash"] - data["wallet_total_transfers"]) / data["wallet_total_transfers"],"percent",True,False)
+	old_variation = colorize_html_value(data["wallet_cash"] - data["wallet_total_transfers"] + data["total_pru"],"euro",True,False)
 	
-	print("<table cellspacing=\"3\"><tr><td width=\"70\" class=\"totals_td\">TOTAL</td>" + total + "</tr>")
+	print("<table cellspacing=\"3\" width=\"100%\"><tr><td width=\"70\" class=\"totals_td\">TOTAL</td>" + total + "</tr>")
 	print("<tr><td width=\"70\" class=\"totals_td\">DAY</td>" + day + "</tr>")
-	print("<tr><td width=\"70\" class=\"totals_td\">PERF</td>" + total_variation + "</tr>")
-	print("<tr><td width=\"70\" class=\"totals_td\">%PERF</td>" + total_performance + "</tr></table>")
+	print("<tr><td width=\"70\" class=\"totals_td\">POS PERF</td>" + total_variation + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">%POS PERF</td>" + total_performance + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">INVEST PERF</td>" + wallet_variation + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">%INVEST PERF</td>" + wallet_performance + "</tr>")
+	print("<tr><td width=\"70\" class=\"totals_td\">OLD POS</td>" + old_variation + "</tr></table>")
 
 def print_html_globals(d):
-	print("<table cellspacing=\"3\"><tr><th width=\"150\">NAME</th><th width=\"70\">PRICE</th><th width=\"70\">%DAY</th></tr>")
+	global anonymous
+	if d["anonymous"] == "on":
+		anonymous = False
+	else: anonymous = False
+	
+	print("<table cellspacing=\"3\" width=\"100%\"><tr><th width=\"125\">NAME</th><th width=\"100\">PRICE</th><th width=\"70\">%DAY</th></tr>")
 	for v in d["globals"]:
-		price = colorize_html_value(v["c"],"none",False)
-		pc_day = colorize_html_value(v["cp_fix"],"percent",True)
-		print("<tr><td width=70><font color=\"white\">" + v["real_name"] + "</font>" + price + pc_day )
+		if 'US' in v["real_name"]:
+			price = colorize_html_value(v["c"],"dollar",False,anonymous)
+		else :
+			price = colorize_html_value(v["c"],"none",False,anonymous)
+		pc_day = colorize_html_value(v["cp_fix"],"percent",True,anonymous)
+		print("<tr><td width=70>" + v["real_name"] + "</font>" + price + pc_day )
+	for v in d["cryptos"]:
+		if v["real_name"] == "Ripple":
+			price = colorize_html_value(v["c"]*1200,"euro",False,anonymous)
+			pc_day = colorize_html_value(v["o"],"percent",True,anonymous)
+			print("<tr><td width=70>" + v["real_name"] + "</font>" + price + pc_day)
+		else:
+			price = colorize_html_value(v["c"],"crypto",False,anonymous)
+			pc_day = colorize_html_value(v["o"],"percent",True,anonymous)
+			print("<tr><td width=70>" + v["real_name"] + "</font>" + price + pc_day)
 	print("</table>")
 
 
 def print_html_values(d):
-	print("<table cellspacing=\"3\"><tr><th width=\"150\">NAME</th><th width=\"70\">INVEST</th><th width=\"70\">PRU</th><th width=\"70\">PRICE</th><th width=\"70\">%DAY</th><th width=\"70\">DAY</th><th width=\"70\">TOTAL</th><th width=\"70\">%TOTAL</th>\n</tr>")
+	global anonymous
+	if d["anonymous"] == "on":
+		anonymous = True
+	else: anonymous = False
+	print("<table cellspacing=\"3\" width=\"100%\"><tr><th width=\"150\">NAME</th><th width=\"70\">INVEST</th><th width=\"70\">PRU</th><th width=\"70\">PRICE</th><th width=\"70\">%DAY</th><th width=\"70\">DAY</th><th width=\"70\">TOTAL</th><th width=\"70\">%TOTAL</th>\n</tr>")
 	for v in d["values"]:
-		pru = colorize_html_value(v["pru"],"euro",False)
-		price = colorize_html_value(v["c"],"euro",False)
-		pc_day = colorize_html_value(v["cp_fix"],"percent",True)
-		day = colorize_html_value(v["c_fix"]*v["nb"],"euro",True)
-		total = colorize_html_value(v["nb"]*(v["c"]-v["pru"]),"euro",True)
-		invest = colorize_html_value(v["nb"]*v["pru"],"euro",False)
-		pc_total = colorize_html_value(100 * (v["nb"]*(v["c"]-v["pru"])) / (v["nb"]*v["pru"]),"percent",True)
-		name = "<tr>\n\t<td width=\"70\"><font color=\"white\">" + str('%-8s' % (v["real_name"])) + "</font></td>"
+		pru = colorize_html_value(v["pru"],"euro",False,anonymous)
+		price = colorize_html_value(v["c"],"euro",False,False)
+		pc_day = colorize_html_value(v["cp_fix"],"percent",True,False)
+		day = colorize_html_value(v["c_fix"]*v["nb"],"euro",True,anonymous)
+		total = colorize_html_value(v["nb"]*(v["c"]-v["pru"]),"euro",True,anonymous)
+		invest = colorize_html_value(v["nb"]*v["pru"],"euro",False,anonymous)
+		pc_total = colorize_html_value(100 * (v["nb"]*(v["c"]-v["pru"])) / (v["nb"]*v["pru"]),"percent",True,False)
+		name = "<tr>\n\t<td width=\"70\">" + str('%-8s' % (v["real_name"])) + "</font></td>"
 		print(name + invest + pru + price + pc_day + day + total + pc_total +"\n</tr>")
 	print("</table>")

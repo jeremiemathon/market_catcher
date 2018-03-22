@@ -1,24 +1,54 @@
 body{
-  color: #FFFFFF;
-  font-size: 90%
+  color: #CEC0C0;
+  font-size: 100%
+}
+a:link {
+    color: #00ff00;
+}
+
+/* visited link */
+a:visited {
+    color: green;
 }
 .stock_table {
-border: medium solid #00FF00;
+border: medium solid grey;
 border-collapse: collapse;
 width: 100%;
 }
 .twitter {
-border: medium solid #00FF00;
+border: medium solid #0066ff;
 border-collapse: collapse;
 width: 100%;
+height: 100%;
+}
+.twitter_th {
+background-color: #0066ff;
+color: #000000;
+height: 100;
+}
+.twitter_today {
+color: #0066ff;
+}
+.boursorama {
+border: medium solid #ff1a40;
+border-collapse: collapse;
+width: 100%;
+height: 100%;
+}
+.boursorama_th {
+background-color: #FF1a40;
+color: #000000;
+height: 20;
 }
 th {
-background-color: #00FF00;
+background-color: grey;
 color: #000000;
+height: 20;
 }
 .totals_td {
-background-color: #00FF00;
+background-color: grey;
 color: #000000;
+font-weight: bold;
 }
 .stock_td {
 font-family: sans-serif;
