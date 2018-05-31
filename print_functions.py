@@ -158,6 +158,7 @@ def print_html_values(d):
 		day = colorize_html_value(v["c_fix"]*v["nb"],"euro",True,anonymous)
 		total = colorize_html_value(v["nb"]*(v["c"]-v["pru"]),"euro",True,anonymous)
 		invest = colorize_html_value(v["nb"]*v["pru"],"euro",False,anonymous)
+		invest = colorize_html_value(v["nb"]*v["c"],"euro",False,anonymous)
 		pc_total = colorize_html_value(100 * (v["nb"]*(v["c"]-v["pru"])) / (v["nb"]*v["pru"]),"percent",True,False)
 		name = "<tr>\n\t<td width=\"70\">" + str('%-8s' % (v["real_name"])) + "</font></td>"
 		print(name + invest + pru + price + pc_day + day + total + pc_total +"\n</tr>")

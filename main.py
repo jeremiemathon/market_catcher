@@ -32,9 +32,13 @@ if __name__ == '__main__':
 	cgitb.enable()
 	now = datetime.datetime.now()
 	d = fulfill_data_file()
+	file = open("main.json","w")
+	file.write(str(d).replace("'",'"'))
+	file.close()
 	#server.create_server_instance('0.0.0.0',8888,d)
 	if parsing():
 		while 1:
+			print(d)
 			os.environ['TERM'] = 'xterm'
 			os.system('clear')
 			print_totals(d)
